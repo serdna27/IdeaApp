@@ -17,15 +17,17 @@ namespace IdeaApp.Controllers
     {
 
         IRepository<Idea> _repo=null;
+        private readonly ILogger _logger;
         
-        public IdeaController()
+        public IdeaController(ILogger<IdeaController> logger)
         {
             _repo=new MainRepository<Idea>(new IdeaDbContext());
+            _logger=logger;
             
         }
-        public ActionResult<PagedListResult<IdeaDTO>> Index(){
+        public ActionResult<IList<IdeaDTO>> Index(){
 
-
+            _logger.LogInformation("Buen Perro");
             string getQueryString(string key){
                 return this.Request.Query.Where(k => k.Key == key).Select(k => k.Value).FirstOrDefault();
             };
@@ -36,17 +38,20 @@ namespace IdeaApp.Controllers
             var sortOrderAsc = (getQueryString("order") ?? "asc") =="asc"; 
 
             var res = _repo.GetByAnyPaging(k=>k.Id>0, k => k.Id, pageIndex, pageSize, sortOrderAsc);
-            return new PagedListResult<IdeaDTO>{
+            return res.Records.Select(e => new IdeaDTO(e)).ToList();
 
-              TotalRecords = res.TotalRecords,
-              Records = res.Records.Select(e=>new IdeaDTO(e)).ToList()
-            };
+            // return new PagedListResult<IdeaDTO>{
 
+            //   TotalRecords = res.TotalRecords,
+            //   Records = 
+            // };
         }
 
         [HttpGet("{id}")]
         public ActionResult<IdeaDTO> GetIdeaItem(int id){
             var obj = _repo.GetById(id);
+            _logger.LogInformation($"{obj.Id}");
+            // _logger.LogDebug($"{obj.Id}");
 
             if(obj==null){
                 return NotFound();
@@ -91,8 +96,10 @@ namespace IdeaApp.Controllers
                 rec.Ease = ideacRecToCreate.ease;
                 rec.Impact = ideacRecToCreate.ease;
                 rec.CreationDate = DateTime.Now;
+                rec=_repo.Add(rec);
+                _logger.LogInformation($" about to send ==>{rec.Id}");
+                return CreatedAtAction(nameof(GetIdeaItem), new { id = rec.Id }, new IdeaDTO(rec));
 
-                return new IdeaDTO(_repo.Add(rec));
             }
             catch (System.Exception)
             {

@@ -19,8 +19,9 @@ namespace IdeaApp.Models.Repo.Base{
         public TEntity Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
-            var id =_context.SaveChanges();
-            return this.GetById(id);
+            _context.SaveChanges();
+            return entity;
+            // return this.GetById(entity);
             
         }
 

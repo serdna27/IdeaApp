@@ -8,11 +8,15 @@ POST https://localhost:5001/ideas
 content-type: application/json
 
 {
-    "Content":"Buy Car2",
+    "Content":"Buy Car255",
     "Confidence":4,
     "Ease":3,
     "Impact":2  
 }
+
+#####################################
+#Api Idea Get By Id
+GET https://localhost:5001/ideas/1
 
 #####################################
 #Api Idea Update
