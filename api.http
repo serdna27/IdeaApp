@@ -1,0 +1,32 @@
+
+#Api Idea Index
+GET https://localhost:5001/ideas
+
+#####################################
+#Api Idea Create
+POST https://localhost:5001/ideas
+content-type: application/json
+
+{
+    "Content":"Buy Car2",
+    "Confidence":4,
+    "Ease":3,
+    "Impact":2  
+}
+
+#####################################
+#Api Idea Update
+PUT https://localhost:5001/ideas/2
+content-type: application/json
+
+{
+    "Content":"Buy Car Brand New",
+    "Confidence":4,
+    "Ease":3,
+    "Impact":2,
+    "Id":2  
+}
+
+#####################################
+#Api Idea Delete
+DELETE  https://localhost:5001/ideas/2
