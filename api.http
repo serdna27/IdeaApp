@@ -34,3 +34,16 @@ content-type: application/json
 #####################################
 #Api Idea Delete
 DELETE  https://localhost:5001/ideas/2
+
+
+#####################################
+#Api Users Create
+POST https://localhost:5001/users
+content-type: application/json
+
+{
+  "email": "andy-blacki62@codementor.io",
+  "userName": "andy-blacki62@codementor.io",
+  "name": "Jack Black",
+  "password": "the-Secret-123"
+}

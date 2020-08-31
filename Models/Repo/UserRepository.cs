@@ -17,8 +17,22 @@ namespace IdeaApp.Models.Repo
             
         }
 
+        
+        public override User GetById(int id){
+
+            var usr = Context.Set<User>().Find(id);
+            
+            Context.Entry(usr)
+            .Collection(us=>us.Tokens).Load();
+
+            return usr;
+
+        }
+
         public RefreshToken SaveRefreshToken(User usr,RefreshToken token)
         {
+            usr =this.GetById(usr.Id);
+            
             usr.Tokens.Add(token);
             this.Update(usr);
             return token;

@@ -11,11 +11,16 @@ namespace IdeaApp.Models.Repo.Base{
     {
 
         private DbContext _context;
+
+        
         public MainRepository(DbContext context)
         {
             _context= context;
             
         }
+
+        public DbContext Context => _context;
+
         public TEntity Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);

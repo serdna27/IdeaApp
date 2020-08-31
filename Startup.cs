@@ -38,6 +38,8 @@ namespace IdeaApp
             services.AddIdentity<User,IdentityRole<int>>()
                 .AddEntityFrameworkStores<IdeaDbContext>()
                 .AddDefaultTokenProviders();
+            
+            
 
             // Adding Authentication  
             services.AddAuthentication(options =>
@@ -56,9 +58,9 @@ namespace IdeaApp
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = Configuration["JWT:ValidAudience"],
-                    ValidIssuer = Configuration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"]))
                 };
             });
         }

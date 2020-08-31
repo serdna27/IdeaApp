@@ -15,7 +15,7 @@ namespace IdeaApp.Utils
 
     public class JwtUtils{
 
-        private List<Claim> CreateClaims(string id)
+        private static List<Claim> CreateClaims(string id)
         {
             var claims = new List<Claim>();
 
@@ -24,7 +24,7 @@ namespace IdeaApp.Utils
             return claims;
         }
 
-        public string GenerateJwtToken(string appSecret, IEnumerable<Claim> claims, double expirationInMinutes)
+        public static string GenerateJwtToken(string appSecret, IEnumerable<Claim> claims, double expirationInMinutes)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(appSecret);
@@ -51,7 +51,7 @@ namespace IdeaApp.Utils
             return tokenHandler.WriteToken(token);
         }
 
-        public string GenerateRefreshToken()
+        public static string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
             using (var rng = RandomNumberGenerator.Create())
@@ -62,7 +62,7 @@ namespace IdeaApp.Utils
         }
 
 
-        public RefreshToken GenerateRefreshToken(User user, IUserRepository userRepo)
+        public static RefreshToken GenerateRefreshToken(User user, IUserRepository userRepo)
         {
             // Create the refresh token
             var refreshToken = new RefreshToken()

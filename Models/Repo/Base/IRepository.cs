@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdeaApp.Models.Repo.Base
 {
@@ -18,7 +19,8 @@ namespace IdeaApp.Models.Repo.Base
 
     PagedListResult<TEntity> GetByAnyPaging(Func<TEntity, bool> filter, Expression<Func<TEntity, object>> orderBy, int pageIndex, int pageSize, bool isOrderAsc = true);
 
-    
+    DbContext Context {get;}
+
 }
 
 public class PagedListResult<TEntity>
