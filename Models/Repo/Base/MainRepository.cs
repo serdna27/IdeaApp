@@ -25,7 +25,7 @@ namespace IdeaApp.Models.Repo.Base{
             
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
            _context.Set<TEntity>().Remove(entity);
            _context.SaveChanges();
@@ -33,12 +33,12 @@ namespace IdeaApp.Models.Repo.Base{
         }
 
 
-        public IEnumerable<TEntity> GetByAny(Func<TEntity, bool> filter)
+        public virtual IEnumerable<TEntity> GetByAny(Func<TEntity, bool> filter)
         {
             return _context.Set<TEntity>().Where(filter);
         }
 
-        public PagedListResult<TEntity> GetByAnyPaging(Func<TEntity, bool> filter, Expression<Func<TEntity, object>> orderBy, int pageIndex, int pageSize, bool isOrderAsc = true)
+        public virtual PagedListResult<TEntity> GetByAnyPaging(Func<TEntity, bool> filter, Expression<Func<TEntity, object>> orderBy, int pageIndex, int pageSize, bool isOrderAsc = true)
         {
             var query = _context.Set<TEntity>();
 
@@ -54,7 +54,7 @@ namespace IdeaApp.Models.Repo.Base{
             return new PagedListResult<TEntity> { Records = result, TotalRecords = totalRecords };
         }
 
-        public TEntity GetById(int id)
+        public virtual TEntity GetById(int id)
         {
             return _context.Set<TEntity>().Find(id);
         }

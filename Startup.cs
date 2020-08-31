@@ -35,7 +35,7 @@ namespace IdeaApp
 
             
             // For Identity  
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User,IdentityRole<int>>()
                 .AddEntityFrameworkStores<IdeaDbContext>()
                 .AddDefaultTokenProviders();
 

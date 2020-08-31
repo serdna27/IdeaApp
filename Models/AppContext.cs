@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdeaApp.Models
 {
-    public class IdeaDbContext: IdentityDbContext<User>{
+    public class IdeaDbContext: IdentityDbContext<User,IdentityRole<int>,int>{
 
         // public DbSet<UserProfile> UsersProfile { get; set; }
         public DbSet<Idea> Ideas { get; set; }
@@ -23,7 +23,8 @@ namespace IdeaApp.Models
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-                  => options.UseSqlite(@"Data Source=app.db");
+                  => options.UseNpgsql("Host=localhost;port=5434;Database=idea_app_db;Username=postgres;Password=qwerty;");
+                //   options.UseSqlite(@"Data Source=appIdea.db");
 
       
     }

@@ -157,3 +157,5 @@
 /Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
 /Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Npgsql.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Npgsql.EntityFrameworkCore.PostgreSQL.dll
