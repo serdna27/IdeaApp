@@ -3,15 +3,17 @@ using System;
 using IdeaApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IdeaApp.Migrations
 {
     [DbContext(typeof(IdeaDbContext))]
-    partial class IdeaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200831214930_adding field fullname to user")]
+    partial class addingfieldfullnametouser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

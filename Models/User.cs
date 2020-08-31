@@ -9,6 +9,8 @@ namespace IdeaApp.Models
 
         public string AvatarUrl { get; set; }
         public virtual List<RefreshToken> Tokens { get; set; }
+
+        public string FullName { get; set; }
         //You can extend this class by adding addtional properties about the user
     }
 

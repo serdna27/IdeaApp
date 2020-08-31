@@ -42,8 +42,14 @@ POST https://localhost:5001/users
 content-type: application/json
 
 {
-  "email": "andy-blacki62@codementor.io",
-  "userName": "andy-blacki62@codementor.io",
+  "email": "kikolinsss@codementor.io",
   "name": "Jack Black",
   "password": "the-Secret-123"
 }
+
+#####################################
+#Api Users Current
+GET https://localhost:5001/me
+content-type: application/json
+X-Access-Token: 5AUbedW8b2PX4FIr0DM7BjoZQ4NjPYspMLNvhY/Ak7I=
+

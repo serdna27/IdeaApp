@@ -18,6 +18,50 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace IdeaApp.Controllers
 {
+
+    [Route("me")]
+    [ApiController]
+    public class CurrentUserController:ControllerBase{
+
+        IUserRepository _userRepo = new UserRepository(new IdeaDbContext());
+        private readonly ILogger<UserController> _logger;
+
+        public CurrentUserController(IConfiguration configuration, ILogger<UserController> logger)
+        {
+            _logger=logger;
+        }
+        public IActionResult GetCurrentUser()
+        {   
+            if (!this.Request.Headers.ContainsKey("X-Access-Token"))
+                return Unauthorized();
+            
+            var accessToken = this.Request.Headers["X-Access-Token"];
+
+            _logger.LogInformation($"accessToken==>{accessToken}");
+            // accessToken="WtDre5dY/X6z+AV0mqtdn7wt0dWNqRDVKHW5e1wQ2ZQ=";
+
+            var refreshTokenObj=_userRepo.GetRefreshToken(accessToken.ToString());
+                // "WtDre5dY/X6z+AV0mqtdn7wt0dWNqRDVKHW5e1wQ2ZQ=");//$"'{accessToken}'");
+
+            if(refreshTokenObj==null){
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "Invalid Token" });
+            }
+
+            if (DateTime.UtcNow > refreshTokenObj.Expiration)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "Expired Token" });
+            }
+            
+            return Ok(new {
+                email=refreshTokenObj.User.Email,
+                name=refreshTokenObj.User.FullName,
+                avatar_url=""//to update
+            });
+            
+        }
+
+
+    }
     [Route("users")]
     [ApiController]
     public class UserController : ControllerBase
@@ -81,7 +125,7 @@ namespace IdeaApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExists = await userManager.FindByNameAsync(model.Username);
+            var userExists = await userManager.FindByNameAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new  { Status = "Error", Message = "User already exists!" });
 
@@ -89,7 +133,9 @@ namespace IdeaApp.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.Email,
+                FullName=model.Name
+                
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -115,7 +161,7 @@ namespace IdeaApp.Controllers
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
-            var userExists = await userManager.FindByNameAsync(model.Username);
+            var userExists = await userManager.FindByNameAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new  { Status = "Error", Message = "User already exists!" });
 
@@ -123,7 +169,7 @@ namespace IdeaApp.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.Email
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
