@@ -1,44 +1,37 @@
 using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdeaApp.Models
 {
-    public class IdeaDbContext: DbContext{
+    public class IdeaDbContext: IdentityDbContext<User>{
 
-        public DbSet<UserProfile> UsersProfile { get; set; }
+        // public DbSet<UserProfile> UsersProfile { get; set; }
         public DbSet<Idea> Ideas { get; set; }
+        public IdeaDbContext()
+        {
+            
+        }
+        public IdeaDbContext(DbContextOptions<IdeaDbContext> options) : base(options)
+        {
+
+        }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-                  => options.UseSqlite("Data Source=app.db");
+                  => options.UseSqlite(@"Data Source=app.db");
 
       
     }
 
-    public class UserProfile
+    public static class UserRoles
     {
-        public int Id {get; set;}
-        public string Email { get; set; }
-        public string FullName { get; set; }
-
-        public string AvatarUrl { get; set; }
+        public const string Admin = "Admin";
+        public const string User = "User";
     }
-    
-    public class Idea
-    {
-        public int Id { get; set; }
-        
-        public string Content { get; set; }
 
-        public int Impact { get; set; }
-
-        public int Ease { get; set; }
-
-        public int Confidence { get; set; }
-
-        public DateTime CreationDate { get; set; }
-        
-        public DateTime? ModificationDate { get; set; }
-     
-    
-    }
 }

@@ -145,3 +145,15 @@
 /Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/Users/serdna/Documents/Development/DotNet/IdeaApp/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll

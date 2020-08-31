@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using IdeaApp.Models;
 using IdeaApp.Models.Repo.Base;
+using IdeaApp.DTO;
 
 namespace IdeaApp.Controllers
 {
