@@ -15,14 +15,25 @@ namespace IdeaApp.Utils
 
     public class JwtUtils{
 
-        private static List<Claim> CreateClaims(string id)
+        public static readonly int MinutesExpiration=60*2;
+
+        public static List<Claim> GetClaims(User user, IList<string> userRoles)
         {
-            var claims = new List<Claim>();
+            var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name.ToString(), user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
 
-            claims.Add(new Claim(ClaimTypes.Name, id));
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
 
-            return claims;
+            return authClaims;
         }
+
+
 
         public static string GenerateJwtToken(string appSecret, IEnumerable<Claim> claims, double expirationInMinutes)
         {
@@ -74,6 +85,39 @@ namespace IdeaApp.Utils
             };
 
             return userRepo.SaveRefreshToken(user,refreshToken);
+        }
+
+        private string GetUserIdFromAccessToken(string accessToken,string appSecret)
+        {
+            var tokenValidationParamters = new TokenValidationParameters
+            {
+                ValidateAudience = false, 
+                ValidateIssuer = false,
+                ValidateActor = false,
+                ValidateLifetime = false, 
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(appSecret)
+                    )
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParamters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token!");
+            }
+
+            var userId = principal.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new SecurityTokenException($"Missing claim: {ClaimTypes.Name}!");
+            }
+
+            return userId;
         }
 
     }

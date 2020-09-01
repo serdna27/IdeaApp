@@ -51,5 +51,35 @@ content-type: application/json
 #Api Users Current
 GET https://localhost:5001/me
 content-type: application/json
-X-Access-Token: 5AUbedW8b2PX4FIr0DM7BjoZQ4NjPYspMLNvhY/Ak7I=
+X-Access-Token: GxzWY7UFFh8cjW1DzCfqp/AMv0iKiRPnR0eSFA+sFSk=
+
+
+#####################################
+#Api Login Refresh Token Users
+POST https://localhost:5001/access-tokens/refresh
+content-type: application/json
+
+{
+  "refresh_token": "we+t+Rb6pYhvrA++YQ4QvTJqROJ1yqWJ+mIcs2XVQfU="
+}
+
+#####################################
+#Api Login Access Token Users
+POST https://localhost:5001/access-tokens
+content-type: application/json
+
+{
+  "email": "kikolinsss@codementor.io",
+  "password": "the-Secret-123"
+}
+
+
+#####################################
+#Api Logout Access Token Users
+DELETE https://localhost:5001/access-tokens
+content-type: application/json
+
+{
+  "refresh_token": "vxfHFPnejjNeG0gX1iCrAYYvgFFDfkZkofPZm4rPGE0="
+}
 

@@ -10,6 +10,8 @@ namespace IdeaApp.Models.Repo
     public interface IUserRepository:IRepository<User>{
         RefreshToken SaveRefreshToken(User usr,RefreshToken token);
         RefreshToken GetRefreshToken(string refreshToken);
+
+        void ExpireToken(RefreshToken token);
     }
     public class UserRepository : MainRepository<User>,IUserRepository
     {
@@ -18,7 +20,13 @@ namespace IdeaApp.Models.Repo
             
         }
 
-        
+        public void ExpireToken(RefreshToken token)
+        {   
+            token.Expiration=DateTime.UtcNow;
+            Context.Set<RefreshToken>().Update(token);
+            Context.SaveChanges();
+        }
+
         public override User GetById(int id){
 
             var usr = Context.Set<User>().Find(id);
