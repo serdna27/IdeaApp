@@ -8,12 +8,15 @@ using Microsoft.Extensions.Logging;
 using IdeaApp.Models;
 using IdeaApp.Models.Repo.Base;
 using IdeaApp.DTO;
+using Microsoft.AspNetCore.Authorization;
+using IdeaApp.Utils;
 
 namespace IdeaApp.Controllers
 {
 
     [Route("ideas")]
     [ApiController]
+    [CustomAuthorize]
     public class IdeaController : Controller
     {
 

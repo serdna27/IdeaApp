@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using IdeaApp.Models.Repo;
+using IdeaApp.Utils;
 
 namespace IdeaApp
 {
@@ -31,6 +33,8 @@ namespace IdeaApp
         {
             services.AddControllersWithViews();
             services.AddDbContext<IdeaDbContext>();
+            services.AddScoped<IUserRepository>(x=>
+            new UserRepository(x.GetRequiredService<IdeaDbContext>()));
             // (opt=>opt.UseSqlite(@"Data Source=app.db"));
 
             
@@ -42,27 +46,28 @@ namespace IdeaApp
             
 
             // Adding Authentication  
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            // services.AddAuthentication(options =>
+            // {
+            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            // })
 
-            // Adding Jwt Bearer  
-            .AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["Jwt:Issuer"],
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"]))
-                };
-            });
+            // // Adding Jwt Bearer  
+            // .AddJwtBearer(options =>
+            // {
+            //     options.SaveToken = true;
+            //     options.RequireHttpsMetadata = false;
+            //     options.TokenValidationParameters = new TokenValidationParameters()
+            //     {
+            //         ValidateIssuer = true,
+            //         ValidateAudience = true,
+            //         ValidAudience = Configuration["Jwt:Issuer"],
+            //         ValidIssuer = Configuration["Jwt:Issuer"],
+                    
+            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"]))
+            //     };
+            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,6 +99,10 @@ namespace IdeaApp
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+
+            
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
