@@ -77,36 +77,6 @@ namespace IdeaApp.Controllers
 
         }
 
-        // [HttpPost]
-        // [Route("register-admin")]
-        // public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
-        // {
-        //     var userExists = await userManager.FindByNameAsync(model.Email);
-        //     if (userExists != null)
-        //         return StatusCode(StatusCodes.Status500InternalServerError, new  { Status = "Error", Message = "User already exists!" });
-
-        //     var user = new User()
-        //     {
-        //         Email = model.Email,
-        //         SecurityStamp = Guid.NewGuid().ToString(),
-        //         UserName = model.Email
-        //     };
-        //     var result = await userManager.CreateAsync(user, model.Password);
-        //     if (!result.Succeeded)
-        //         return StatusCode(StatusCodes.Status500InternalServerError, new  { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-        //     if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-        //         await roleManager.CreateAsync(new IdentityRole<int>(UserRoles.Admin));
-        //     if (!await roleManager.RoleExistsAsync(UserRoles.User))
-        //         await roleManager.CreateAsync(new IdentityRole<int>(UserRoles.User));
-
-        //     if (await roleManager.RoleExistsAsync(UserRoles.Admin))
-        //     {
-        //         await userManager.AddToRoleAsync(user, UserRoles.Admin);
-        //     }
-
-        //     return Ok(new  { Status = "Success", Message = "User created successfully!" });
-        // }
     }
 
 }

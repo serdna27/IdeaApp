@@ -87,7 +87,7 @@ namespace IdeaApp.Utils
             return userRepo.SaveRefreshToken(user,refreshToken);
         }
 
-        private string GetUserIdFromAccessToken(string accessToken,string appSecret)
+        public static string GetUserIdFromAccessToken(string accessToken,string appSecret)
         {
             var tokenValidationParamters = new TokenValidationParameters
             {

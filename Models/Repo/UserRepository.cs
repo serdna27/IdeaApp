@@ -12,6 +12,8 @@ namespace IdeaApp.Models.Repo
         RefreshToken GetRefreshToken(string refreshToken);
 
         void ExpireToken(RefreshToken token);
+
+        User GetByUserName(string username);
     }
     public class UserRepository : MainRepository<User>,IUserRepository
     {
@@ -29,13 +31,17 @@ namespace IdeaApp.Models.Repo
 
         public override User GetById(int id){
 
-            var usr = Context.Set<User>().Find(id);
+            return Context.Set<User>().Include(us=>us.Tokens)
+            .Where(us=>us.Id==id).FirstOrDefault();
             
-            Context.Entry(usr)
-            .Collection(us=>us.Tokens).Load();
 
-            return usr;
+        }
 
+        public User GetByUserName(string username)
+        {
+            return Context.Set<User>().Include(us => us.Tokens)
+            .Where(k => k.UserName == username || k.Email == username).FirstOrDefault();
+            
         }
 
         public RefreshToken GetRefreshToken(string refreshToken)
