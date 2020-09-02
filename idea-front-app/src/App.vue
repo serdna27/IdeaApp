@@ -28,7 +28,8 @@ import 'vue-material/dist/theme/default.css'
 
 
 
-
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 export default Vue.extend({
   name: 'App',

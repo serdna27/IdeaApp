@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using IdeaApp.Models;
 using IdeaApp.Models.Repo;
 using IdeaApp.Utils;
 using IdeaApp.ViewModels;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 // using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +23,7 @@ namespace IdeaApp.Controllers
 
     [Route("users")]
     [ApiController]
+    // [EnableCors("builder.AllowAnyOrigin")]
     public class UserController : ControllerBase
     {
         private readonly UserManager<User> userManager;
@@ -56,8 +59,13 @@ namespace IdeaApp.Controllers
                 
             };
             var result = await userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new  { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            if (!result.Succeeded){
+                var errors = string.Join(",", result.Errors.Select(e => e.Description));
+                _logger.LogCritical(errors);
+                
+                return StatusCode(StatusCodes.Status500InternalServerError, new  { Status = "Error", Message = errors });
+                
+            }
 
             var userRoles = await userManager.GetRolesAsync(user);
             List<Claim> authClaims = JwtUtils.GetClaims(user, userRoles);

@@ -38,18 +38,23 @@
       </md-app-drawer>
 
       <md-app-content>
-        
+        <SignUp />
+
       </md-app-content>
     </md-app>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
 
+import SignUp from "./SignUp.vue";
 
 export default {
-  name: 'Waterfall'
+  name: 'Waterfall',
+  components:{
+    SignUp
+  }
 }
 </script>
 
@@ -57,12 +62,6 @@ export default {
 
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
-@include md-register-theme("default", (
-  primary: #3fffbe, // The primary color of your brand
-  accent: #1a11e8 // The secondary color of your brand
-));
-
-@import "~vue-material/dist/theme/all"; // Apply the theme
 
   .md-app {
     max-height: 400px;
@@ -73,6 +72,7 @@ export default {
   .md-drawer {
     width: 230px;
     max-width: calc(100vw - 125px);
+    min-height: 400px;
   }
  .left-menu{
     background-color: rgba(0,168,67,1);

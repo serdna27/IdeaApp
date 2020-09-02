@@ -21,6 +21,8 @@ namespace IdeaApp
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,42 +44,41 @@ namespace IdeaApp
             services.AddIdentity<User,IdentityRole<int>>()
                 .AddEntityFrameworkStores<IdeaDbContext>()
                 .AddDefaultTokenProviders();
-            
-            
 
-            // Adding Authentication  
-            // services.AddAuthentication(options =>
-            // {
-            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            // })
 
-            // // Adding Jwt Bearer  
-            // .AddJwtBearer(options =>
-            // {
-            //     options.SaveToken = true;
-            //     options.RequireHttpsMetadata = false;
-            //     options.TokenValidationParameters = new TokenValidationParameters()
-            //     {
-            //         ValidateIssuer = true,
-            //         ValidateAudience = true,
-            //         ValidAudience = Configuration["Jwt:Issuer"],
-            //         ValidIssuer = Configuration["Jwt:Issuer"],
-                    
-            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"]))
-            //     };
-            // });
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowAllOrigins", options => {
+                    // options.AllowAnyOrigin();
+                    options.WithOrigins("*").WithHeaders("*")
+                    .AllowAnyMethod();
+                    // options.AllowAnyHeader();
+                    // options.AllowAnyMethod();
+                }
+                    );
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // app.UseCors(options => options.WithOrigins("http://localhost:8081").AllowAnyMethod());
+
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("X-Xss-Protection", "1");
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
+
+                context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+                context.Response.Headers.Add("Access-Control-Allow-Headers", new[] { "Origin, X-Requested-With, Content-Type, Accept, Authorization" });
+                context.Response.Headers.Add("Access-Control-Allow-Methods", new[] { "GET, POST, PUT, DELETE, OPTIONS" });
+                // context.Response.Headers.Add("Access-Control-Allow-Credentials", new[] { "true" });
+
                 await next();
             });
 
@@ -96,6 +97,8 @@ namespace IdeaApp
 
             app.UseRouting();
 
+            app.UseCors("AllowAllOrigins");
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -108,14 +111,8 @@ namespace IdeaApp
             {
                 endpoints.MapControllers();
 
-                // endpoints.MapControllerRoute(
-                //     name: "default",
-                //     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                // endpoints.MapControllerRoute(
-                //   name: "api",
-                //   pattern: "{controller=Api}/{action=Index}/{id?}");
             });
+
 
         
 
