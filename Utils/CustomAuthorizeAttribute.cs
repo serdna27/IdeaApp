@@ -15,7 +15,7 @@ namespace IdeaApp.Utils
             if (user == null)
             {
                 // not logged in
-                context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                context.Result = new JsonResult(new { message = "Unauthorized, token expired or is invalid" }) { StatusCode = StatusCodes.Status401Unauthorized };
             }
         }
     }

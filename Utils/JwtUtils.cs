@@ -15,7 +15,11 @@ namespace IdeaApp.Utils
 
     public class JwtUtils{
 
+
+
         public static readonly int MinutesExpiration=60*2;
+
+        
 
         public static List<Claim> GetClaims(User user, IList<string> userRoles)
         {
@@ -112,13 +116,26 @@ namespace IdeaApp.Utils
 
             var userId = principal.FindFirst(ClaimTypes.Name)?.Value;
 
+
             if (string.IsNullOrEmpty(userId))
             {
                 throw new SecurityTokenException($"Missing claim: {ClaimTypes.Name}!");
             }
 
+            var tokenExpiryDate = jwtSecurityToken.ValidTo;
+
+
+            if (tokenExpiryDate == DateTime.MinValue) throw new SecurityTokenException("Could not get exp claim from token");
+
+
+            if (tokenExpiryDate < DateTime.UtcNow) throw new SecurityTokenException($"Token expired on: {tokenExpiryDate}");
+
+            
+
             return userId;
         }
+
+       
 
     }
 
