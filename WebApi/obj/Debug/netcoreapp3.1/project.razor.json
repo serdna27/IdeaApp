@@ -1,5 +1,5 @@
 {
-  "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/IdeaApp.csproj",
+  "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/IdeaApp.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14392,38 +14392,38 @@
   "RootNamespace": "IdeaApp",
   "Documents": [
     {
-      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/Views/_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/Views/Shared/Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/Views/Shared/_Layout.cshtml",
+      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/Views/Home/Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
+      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/Views/_ViewStart.cshtml",
+      "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/Views/Home/Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/Views/_ViewImports.cshtml",
+      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/Views/_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/Views/Shared/_ValidationScriptsPartial.cshtml",
+      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/Views/Home/Privacy.cshtml",
+      "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/Views/Home/Index.cshtml",
+      "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/serdna/Documents/Development/DotNet/IdeaApp/WebApi/Views/Shared/Error.cshtml",
+      "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
     }
   ],

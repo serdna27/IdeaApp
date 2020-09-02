@@ -32,6 +32,9 @@ namespace IdeaApp.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -45,6 +48,8 @@ namespace IdeaApp.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("Ideas");
                 });
@@ -271,6 +276,15 @@ namespace IdeaApp.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("IdeaApp.Models.Idea", b =>
+                {
+                    b.HasOne("IdeaApp.Models.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("IdeaApp.Models.RefreshToken", b =>

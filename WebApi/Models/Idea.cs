@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdeaApp.Models
 {
@@ -17,6 +18,11 @@ namespace IdeaApp.Models
         public DateTime CreationDate { get; set; }
 
         public DateTime? ModificationDate { get; set; }
+
+        [ForeignKey("CreatedById")]
+        public virtual User CreatedBy { get; set; }
+
+        public int CreatedById { get; set; }
 
     }
     
