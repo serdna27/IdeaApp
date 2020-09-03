@@ -3,20 +3,11 @@
     <form style="margin:0 auto;" novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
-          <div class="md-title">Sign Up</div>
+          <div class="md-title">Login</div>
         </md-card-header>
 
         <md-card-content>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('firstName')">
-                <label for="first-name">Name</label>
-                <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.firstName" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.firstName.required">The first name is required</span>
-                <span class="md-error" v-else-if="!$v.form.firstName.minlength">Invalid first name</span>
-              </md-field>
-            </div>
-            </div>
+   
 
              <md-field :class="getValidationClass('email')">
             <label for="email">Email</label>
@@ -42,13 +33,13 @@
         
         <span style="color:red;" v-if="apiError!=null">{{ apiError }}</span>
 
-        <md-card-actions style="justify-content: flex-start;">
-          <md-button type="submit" class="md-primary main-button" :disabled="sending">Sign Up</md-button>
+     <md-card-actions style="justify-content: flex-start;">
+          <md-button type="submit" class="md-primary main-button" :disabled="sending">Log In</md-button>
 
-            <span style="color:gray;margin-left:15px;">
-                Already have an account? 
-                <a href="#" class="main-text-color" @click="login">
-                Log in
+            <span style="color:gray;margin-left:8px;font-size:13px">
+                Don't have an account? 
+                <a href="#" class="main-text-color" @click="signup">
+                Create an accout
               </a>
             </span>
             
@@ -78,27 +69,18 @@
     mixins: [validationMixin],
     data: () => ({
       form: {
-        firstName: null,
         password: null,
-        gender: null,
-        age: null,
         email: null,
       },
       userSaved: false,
       sending: false,
       lastUser: null,
       apiError:null,
-      showLoginForm:false
     }),
     validations: {
       form: {
-        firstName: {
-          required,
-          minLength: minLength(3)
-        },
         password: {
           required,
-          minLength: minLength(8)
         },
         email: {
           required,
@@ -124,12 +106,11 @@
         this.form.gender = null
         this.form.email = null
       },
-      saveUser () {
+      login () {
         this.sending = true;
 
         const jsonData={
         "email": this.form.email,
-        "name": this.form.firstName,
         "password": this.form.password  
         };
         const config={
@@ -137,7 +118,7 @@
         };
         // axios.get("https://localhost:5001/ideas/1").then();
 
-        axios.post("https://localhost:5001/users",jsonData,config).then(res=>{
+        axios.post("https://localhost:5001/access-tokens",jsonData,config).then(res=>{
           console.log(res);
           this.userSaved = true;
           this.sending = false;
@@ -166,11 +147,11 @@
         this.$v.$touch()
         
         if (!this.$v.$invalid) {
-          this.saveUser()
+          this.login()
         }
       },
-      login () {
-          this.$emit('show-login-form',true);
+      signup(){
+          this.$emit('show-login-form',false);
       }
     }
   }
@@ -183,7 +164,7 @@
     right: 0;
     left: 0;
   }
-  .main-text-color{
+   .main-text-color{
     color: rgba(0,168,67,1) !important;  
   }
    .main-button{

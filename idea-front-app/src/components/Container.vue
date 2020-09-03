@@ -13,49 +13,140 @@
             
           </div>
         </md-toolbar>
+        <hr style="background-color:gray;">
+        <md-list>
+          <md-list-item class="left-menu">
 
-        <!-- <md-list>
-          <md-list-item>
-            <md-icon>move_to_inbox</md-icon>
-            <span class="md-list-item-text">Inbox</span>
+            <div v-if="isUserSet"  style="margin:0 auto; padding-top:10px;" >
+              <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" width="60px;">
+              
+              <a href="#" class="md-list-item-text" style="color:white" @click="logout">
+                Log Out
+              </a>
+                <!-- <span class="md-list-item-text" style="margin-left:10px;">User</span> -->
+                
+            </div>
+
+            <!-- <md-icon>move_to_inbox</md-icon> -->
+          
           </md-list-item>
 
-          <md-list-item>
-            <md-icon>send</md-icon>
-            <span class="md-list-item-text">Sent Mail</span>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon>delete</md-icon>
-            <span class="md-list-item-text">Trash</span>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon>error</md-icon>
-            <span class="md-list-item-text">Spam</span>
-          </md-list-item>
-        </md-list> -->
+        
+        </md-list>
       </md-app-drawer>
 
       <md-app-content>
-        <SignUp />
+
+        <Signin v-if="showLoginForm" v-on:user-logged="populateTokens" v-on:show-login-form="showLogin"
+          />
+
+        <SignUp v-if="showSignUpForm" v-on:user-logged="populateTokens" v-on:show-login-form="showLogin"
+          />
 
       </md-app-content>
     </md-app>
   </div>
 </template>
 
-<script lang="ts">
+<script >
 
-
+import Vue from 'vue'
 import SignUp from "./SignUp.vue";
+import Signin from "./Signin.vue";
 
-export default {
+import axios from 'axios';
+
+// interface ResultToken{
+//   jwt: string;
+//   refresh_token: string;
+// }
+
+export default Vue.extend({
   name: 'Waterfall',
-  components:{
-    SignUp
+   components:{
+    SignUp,Signin
+  },
+  data(){
+
+    return {
+
+      jwt:"",
+      refresh_token:"",
+      showLoginForm:false,
+      showSignUpForm:true,
+      user:{
+        email: null,
+        name: null,
+        avatar_url: null
+      }
+    }
+  },
+  computed:{
+
+    validToken(){
+      return this.jwt!="" && this.refresh_token!="";
+    },
+    isUserSet(){
+      return this.user.email!=null;
+    }
+  },
+  methods:{
+    
+    populateTokens(result){
+      this.jwt=result.jwt;
+      this.refresh_token=result.refresh_token;
+      console.log("populate tokens and fill user");
+        const config={
+            headers:{
+            "content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "X-Access-Token":this.jwt
+            }
+        };
+
+      axios.get("https://localhost:5001/me",config).then(res=>{
+        this.user=res.data;
+      })
+      
+
+    },
+
+    logout(){
+
+        console.log("populate tokens and fill user");
+        const config={
+            headers:{
+            "content-type": "application/json"
+            // "Access-Control-Allow-Origin": "*",
+            // "refresh_token":this.refresh_token
+            }
+        };
+
+        axios({
+      method: 'DELETE',
+      url: 'https://localhost:5001/access-tokens',
+      data: {refresh_token:this.refresh_token},
+      config : config
+      }).then(res=>{
+           this.user.email=null;
+        this.user.name=null;
+        this.user.avatar_url=null;
+        this.jwt=null;
+        this.refresh_token=null;
+      });
+
+   
+
+    },
+    showLogin(showLogin){
+      this.showLoginForm = showLogin;
+      this.showSignUpForm = !showLogin;
+    }
+
+
   }
-}
+  
+})
 </script>
 
 <style lang="scss" scoped>
@@ -82,6 +173,11 @@ export default {
 .md-drawer {
     background: rgba(0,168,67,1) !important; // makes the drawer partially blue
     color:white !important;;
+}
+
+.md-list.md-theme-default{
+      background-color: rgba(0,168,67,1) !important;
+      // var(--md-theme-default-background, rgb(77, 143, 3));
 }
 
 </style>
