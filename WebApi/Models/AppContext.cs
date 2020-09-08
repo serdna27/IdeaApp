@@ -23,7 +23,7 @@ namespace IdeaApp.Models
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-                  => options.UseNpgsql("Host=localhost;port=5434;Database=idea_app_db;Username=postgres;Password=qwerty;");
+                  => options.UseNpgsql("Host=localhost;port=5432;Database=idea_app_db;Username=postgres;Password=qwerty;");
                 //   options.UseSqlite(@"Data Source=appIdea.db");
 
       

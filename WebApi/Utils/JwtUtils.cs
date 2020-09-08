@@ -17,7 +17,7 @@ namespace IdeaApp.Utils
 
 
 
-        public static readonly int MinutesExpiration=60*2;
+        public static readonly int MinutesExpiration=10;//60*2;
 
         
 

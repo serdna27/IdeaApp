@@ -18,12 +18,12 @@
           <md-list-item class="left-menu">
 
             <div v-if="isUserSet"  style="margin:0 auto; padding-top:10px;" >
-              <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" width="60px;">
+              <img :src="'https://www.gravatar.com/avatar/'+user.avatar_url" width="60px;">
               
-              <a href="#" class="md-list-item-text" style="color:white" @click="logout">
+              <a href="#" class="md-list-item-text" style="color:white; margin-left:5px;" @click="logout">
                 Log Out
               </a>
-                <!-- <span class="md-list-item-text" style="margin-left:10px;">User</span> -->
+                <span class="md-list-item-text" style="">{{ user.name }}</span>
                 
             </div>
 
@@ -33,15 +33,19 @@
 
         
         </md-list>
-      </md-app-drawer>
+      </md-app-drawer>s
 
       <md-app-content>
 
-        <Signin v-if="showLoginForm" v-on:user-logged="populateTokens" v-on:show-login-form="showLogin"
+      <Signin v-if="showLoginForm && isUserSet==false" v-on:user-logged="populateTokens" v-on:show-login-form="showLogin"
           />
 
-        <SignUp v-if="showSignUpForm" v-on:user-logged="populateTokens" v-on:show-login-form="showLogin"
-          />
+        <SignUp v-if="showSignUpForm && isUserSet==false" v-on:user-logged="populateTokens" v-on:show-login-form="showLogin"
+          /> 
+
+        <!-- <IdeasPanel :user="user" :jwt="jwt" :refresh_token="refresh_token"  /> -->
+        <IdeasPanel :user="user" v-if="isUserSet" :jwt="jwt"
+         :refresh_token="refresh_token"  />
 
       </md-app-content>
     </md-app>
@@ -54,6 +58,8 @@ import Vue from 'vue'
 import SignUp from "./SignUp.vue";
 import Signin from "./Signin.vue";
 
+import IdeasPanel from './IdeasPanel.vue'
+
 import axios from 'axios';
 
 // interface ResultToken{
@@ -64,7 +70,7 @@ import axios from 'axios';
 export default Vue.extend({
   name: 'Waterfall',
    components:{
-    SignUp,Signin
+    SignUp,Signin,IdeasPanel
   },
   data(){
 
@@ -106,7 +112,16 @@ export default Vue.extend({
 
       axios.get("https://localhost:5001/me",config).then(res=>{
         this.user=res.data;
-      })
+      }).catch(res=>{
+        
+        if(res.response.data!=null && res.response.data.message!=null){
+
+          if(res.response.data.message.indexOf("token expired")>0){
+            this.user.email="";
+
+          }
+        }
+      });
       
 
     },
@@ -163,7 +178,7 @@ export default Vue.extend({
   .md-drawer {
     width: 230px;
     max-width: calc(100vw - 125px);
-    min-height: 400px;
+    min-height: 100%;
   }
  .left-menu{
     background-color: rgba(0,168,67,1);

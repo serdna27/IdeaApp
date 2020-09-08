@@ -51,6 +51,7 @@ namespace IdeaApp.Controllers
             // };
         }
 
+
         [HttpGet("{id}")]
         public ActionResult<IdeaDTO> GetIdeaItem(int id){
             var obj = _repo.GetById(id);
@@ -83,8 +84,9 @@ namespace IdeaApp.Controllers
                 return new IdeaDTO(rec);
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                _logger.LogInformation($"Buen Perro fallo==>{ex}");
                 return NotFound();
             }
         }
@@ -95,18 +97,21 @@ namespace IdeaApp.Controllers
             try
             {
                 var rec = new Idea();
+                var user = (User)this.HttpContext.Items["User"];
                 rec.Confidence = ideacRecToCreate.confidence;
                 rec.Content = ideacRecToCreate.content;
                 rec.Ease = ideacRecToCreate.ease;
                 rec.Impact = ideacRecToCreate.ease;
                 rec.CreationDate = DateTime.Now;
+                rec.CreatedById=user.Id;
                 rec=_repo.Add(rec);
                 _logger.LogInformation($" about to send ==>{rec.Id}");
                 return CreatedAtAction(nameof(GetIdeaItem), new { id = rec.Id }, new IdeaDTO(rec));
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                _logger.LogInformation($"Buen Perro fallo==>{ex}");
 
                 return NotFound();
             }

@@ -126,7 +126,8 @@
           this.$emit('user-logged',res.data);
           this.apiError="";
         }).catch(reason=>{
-            if(reason.response.data!=null){
+          debugger;
+            if(reason.response.data!=null && reason.response.data.message!=null){
                 this.apiError=reason.response.data.message;
             }
             else{

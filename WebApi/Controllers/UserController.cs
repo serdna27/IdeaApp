@@ -55,7 +55,8 @@ namespace IdeaApp.Controllers
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Email,
-                FullName=model.Name
+                FullName=model.Name,
+                GravatarImageUrl=GravatarUtil.GetImageHash(model.Email)
                 
             };
             var result = await userManager.CreateAsync(user, model.Password);

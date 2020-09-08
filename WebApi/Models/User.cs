@@ -11,6 +11,8 @@ namespace IdeaApp.Models
         public virtual List<RefreshToken> Tokens { get; set; }
 
         public string FullName { get; set; }
+
+        public string GravatarImageUrl { get; set; }
         //You can extend this class by adding addtional properties about the user
     }
 

@@ -18,8 +18,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace IdeaApp.Controllers
 {
-
-
     [ApiController]
     [Route("access-tokens")]
     public class AccessTokensController : ControllerBase

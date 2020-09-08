@@ -24,6 +24,11 @@ namespace IdeaApp
                     logging.AddTraceSource("Information, ActivityTracing"); // Add Trace listener provider
 
                 })
+                .ConfigureAppConfiguration((hostingContext,config)=>{
+
+                    config.AddEnvironmentVariables();
+
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

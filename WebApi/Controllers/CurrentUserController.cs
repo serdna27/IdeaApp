@@ -16,8 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-
-
 namespace IdeaApp.Controllers
 {
 
@@ -75,7 +73,7 @@ namespace IdeaApp.Controllers
             {
                 email = refreshTokenObj.User.Email,
                 name = refreshTokenObj.User.FullName,
-                avatar_url = ""//to update
+                avatar_url = refreshTokenObj.User.GravatarImageUrl
             });
 
         }
