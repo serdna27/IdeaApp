@@ -98,7 +98,7 @@
                           <a href="#"  @click.prevent="setEditMode" class="mr-2">
                             <img src="../assets/pen.png"  alt />
                           </a>
-                          <a href="#"  @click.prevent="deleteIdea">
+                          <a href="#"  @click.prevent="dialogActive=true">
                             <img src="../assets/bin.png"  alt />
                           </a>
                         </div>
@@ -117,6 +117,15 @@
           <!-- <form style="margin:0 auto;" novalidate  @submit.prevent="validateData">
 
         </form> -->
+
+     <md-dialog-confirm
+      :md-active.sync="dialogActive"
+      md-title="Are you sure?"
+      md-content="The idea will be permanently deleted."
+      md-confirm-text="Agree"
+      md-cancel-text="Disagree"
+      @md-cancel="dialogActive=false"
+      @md-confirm="deleteIdea" />
       
     </div>
 
@@ -180,7 +189,8 @@ data() {
         apiError:null,
         ideaId:this.id,
         viewMode:isViewMode,
-        idea:idea
+        idea:idea,
+        dialogActive:false
     }
 },
  validations: {
@@ -321,21 +331,17 @@ methods:{
       //
     },
     deleteIdea(){
-       const config={
+      const config={
             headers:{"content-type": "application/json",
             "Access-Control-Allow-Origin": "*",
             "X-Access-Token":this.jwt
             }
         };
 
-        axios({
-      method: 'DELETE',
-      url: 'https://localhost:5001/ideas/'+this.ideaRec.id,
-      config : config
-      }).then(res=>{
-       this.$emit("idea-updated",null);
+      axios.delete('https://localhost:5001/ideas/'+this.ideaRec.id,config).then(res=>{
+        this.$emit("idea-updated",null);
       });
-      //
+     
     }
 
 

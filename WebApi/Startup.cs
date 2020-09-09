@@ -16,12 +16,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using IdeaApp.Models.Repo;
 using IdeaApp.Utils;
+using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Logging;
 
 namespace IdeaApp
 {
     public class Startup
     {
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private ILogger<Startup> _logger;
 
         public Startup(IConfiguration configuration)
         {
@@ -36,7 +39,7 @@ namespace IdeaApp
             services.AddControllersWithViews();
             services.AddDbContext<IdeaDbContext>();
             services.AddScoped<IUserRepository>(x=>
-            new UserRepository(x.GetRequiredService<IdeaDbContext>()));
+            new UserRepository(x.GetRequiredService<IdeaDbContext>(),_logger));
             // (opt=>opt.UseSqlite(@"Data Source=app.db"));
 
             
@@ -59,14 +62,33 @@ namespace IdeaApp
                     );
             });
 
+              // Note .AddMiniProfiler() returns a IMiniProfilerBuilder for easy intellisense
+            services.AddMiniProfiler(options =>
+            {
+                // All of this is optional. You can simply call .AddMiniProfiler() for all defaults
+                // (Optional) Path to use for profiler URLs, default is /mini-profiler-resources
+                options.RouteBasePath = "/profiler";
+
+                // (Optional) Control which SQL formatter to use, InlineFormatter is the default
+                options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
+
+            }).AddEntityFramework();
+
+            services.AddMvcCore()
+            .AddApiExplorer();
+
+            services.AddSwaggerGen(c=>{
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
+            });
+
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILogger<Startup> logger)
         {
             // app.UseCors(options => options.WithOrigins("http://localhost:8081").AllowAnyMethod());
-
+            _logger = logger;
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("X-Xss-Protection", "1");
@@ -83,7 +105,7 @@ namespace IdeaApp
             });
 
             if (env.IsDevelopment())
-            {
+            {      app.UseMiniProfiler();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -95,6 +117,15 @@ namespace IdeaApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+               app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
             app.UseRouting();
 
             app.UseCors("AllowAllOrigins");
@@ -103,7 +134,7 @@ namespace IdeaApp
 
             app.UseAuthorization();
 
-
+            
             
             app.UseMiddleware<JwtMiddleware>();
 

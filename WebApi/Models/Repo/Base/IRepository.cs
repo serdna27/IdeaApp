@@ -17,7 +17,7 @@ namespace IdeaApp.Models.Repo.Base
 
     IEnumerable<TEntity> GetByAny(Func<TEntity, bool> filter);
 
-    PagedListResult<TEntity> GetByAnyPaging(Func<TEntity, bool> filter, Expression<Func<TEntity, object>> orderBy, int pageIndex, int pageSize, bool isOrderAsc = true);
+    PagedListResult<TEntity> GetByAnyPaging(Func<TEntity, bool> filter, Func<TEntity, object> orderBy, int pageIndex, int pageSize, bool isOrderAsc = true);
 
     DbContext Context {get;}
 

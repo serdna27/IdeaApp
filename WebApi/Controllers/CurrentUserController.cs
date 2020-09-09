@@ -24,8 +24,7 @@ namespace IdeaApp.Controllers
     public class CurrentUserController : ControllerBase
     {
 
-        IUserRepository _userRepo = new UserRepository(new IdeaDbContext());
-        private readonly ILogger<UserController> _logger;
+        IUserRepository _userRepo;
 
         private readonly IConfiguration _configuration;
 
@@ -33,7 +32,10 @@ namespace IdeaApp.Controllers
         {
             _logger = logger;
             _configuration=configuration;
+            _userRepo= new UserRepository(new IdeaDbContext(),logger);
         }
+        private readonly ILogger<UserController> _logger;
+        
         public IActionResult GetCurrentUser()
         {
             if (!this.Request.Headers.ContainsKey("X-Access-Token"))

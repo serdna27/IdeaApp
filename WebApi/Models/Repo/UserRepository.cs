@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using IdeaApp.Models.Repo.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace IdeaApp.Models.Repo
 {
@@ -17,7 +18,7 @@ namespace IdeaApp.Models.Repo
     }
     public class UserRepository : MainRepository<User>,IUserRepository
     {
-        public UserRepository(DbContext context):base(context)
+        public UserRepository(DbContext context,ILogger logger):base(context,logger)
         {
             
         }

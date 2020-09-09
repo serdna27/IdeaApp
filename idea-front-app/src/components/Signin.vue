@@ -130,8 +130,8 @@
             if(reason.response.data!=null && reason.response.data.message!=null){
                 this.apiError=reason.response.data.message;
             }
-            else{
-                this.apiError="An Error Ocurred..";
+            else if(reason.response.data!=null && reason.response.data.status==401){
+                this.apiError="Wrong user or password.";
             }
             this.sending = false;
         });

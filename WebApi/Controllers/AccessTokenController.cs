@@ -23,7 +23,7 @@ namespace IdeaApp.Controllers
     public class AccessTokensController : ControllerBase
     {
 
-        IUserRepository _userRepo = new UserRepository(new IdeaDbContext());
+        IUserRepository _userRepo;
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<User> _userManager;
 
@@ -33,6 +33,7 @@ namespace IdeaApp.Controllers
             _logger = logger;
             _userManager = userManager;
             _configuration = configuration;
+            _userRepo= new UserRepository(new IdeaDbContext(),_logger);
 
         }
 
@@ -130,8 +131,6 @@ namespace IdeaApp.Controllers
         }
 
 
-
     }
-
 
 }

@@ -25,13 +25,14 @@ namespace IdeaApp.Controllers
         
         public IdeaController(ILogger<IdeaController> logger)
         {
-            _repo=new MainRepository<Idea>(new IdeaDbContext());
+            _repo=new MainRepository<Idea>(new IdeaDbContext(),logger);
             _logger=logger;
             
         }
         public ActionResult<IList<IdeaDTO>> Index(){
 
-            _logger.LogInformation("Buen Perro");
+            var user = (User)this.HttpContext.Items["User"];
+            _logger.LogInformation($"Buen Perro filtrando las ideas==>{user.Id}");
             string getQueryString(string key){
                 return this.Request.Query.Where(k => k.Key == key).Select(k => k.Value).FirstOrDefault();
             };
@@ -41,7 +42,7 @@ namespace IdeaApp.Controllers
             var pageSize = int.Parse(getQueryString("page_size") ?? "10"); 
             var sortOrderAsc = (getQueryString("order") ?? "asc") =="asc"; 
 
-            var res = _repo.GetByAnyPaging(k=>k.Id>0, k => k.Id, pageIndex, pageSize, sortOrderAsc);
+            var res = _repo.GetByAnyPaging(k=>k.CreatedById==user.Id, k => k.Id, pageIndex, pageSize, sortOrderAsc);
             return res.Records.Select(e => new IdeaDTO(e)).ToList();
 
             // return new PagedListResult<IdeaDTO>{

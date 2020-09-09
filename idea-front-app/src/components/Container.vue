@@ -18,12 +18,20 @@
           <md-list-item class="left-menu">
 
             <div v-if="isUserSet"  style="margin:0 auto; padding-top:10px;" >
-              <img :src="'https://www.gravatar.com/avatar/'+user.avatar_url" width="60px;">
+           
               
-              <a href="#" class="md-list-item-text" style="color:white; margin-left:5px;" @click="logout">
+              <h6 class="md-list-item-text" style="color:white;text-align:center;">
+                   <img :src="'https://www.gravatar.com/avatar/'+user.avatar_url" width="40">
+                   <span style="text-align:center">
+               {{ user.name }}
+                   </span>
+                <a href="#" class="md-list-item-text" style="color:rgba(42,56,66,0.65);"
+                 @click="logout">
+                 <small>
                 Log Out
-              </a>
-                <span class="md-list-item-text" style="">{{ user.name }}</span>
+                 </small>
+                </a>
+              </h6>
                 
             </div>
 
@@ -33,7 +41,7 @@
 
         
         </md-list>
-      </md-app-drawer>s
+      </md-app-drawer>
 
       <md-app-content>
 
@@ -148,6 +156,19 @@ export default Vue.extend({
         this.user.avatar_url=null;
         this.jwt=null;
         this.refresh_token=null;
+      }).catch(res=>{
+        
+          //  else if(reason.response.data!=null && reason.response.data.status==401){
+          //       this.apiError="Wrong user or password.";
+          //   }
+        if(res.response.data!=null && res.response.data.message!=null &&
+         res.response.data.message=='Expired Token'){
+            this.user.email=null;
+            this.user.name=null;
+            this.user.avatar_url=null;
+            this.jwt=null;
+            this.refresh_token=null;
+        }
       });
 
    
@@ -170,7 +191,7 @@ export default Vue.extend({
 
 
   .md-app {
-    max-height: 400px;
+    max-height: 800px;
     border: 1px solid rgba(#000, .12);
   }
 
@@ -178,7 +199,7 @@ export default Vue.extend({
   .md-drawer {
     width: 230px;
     max-width: calc(100vw - 125px);
-    min-height: 100%;
+    min-height: 800px;
   }
  .left-menu{
     background-color: rgba(0,168,67,1);

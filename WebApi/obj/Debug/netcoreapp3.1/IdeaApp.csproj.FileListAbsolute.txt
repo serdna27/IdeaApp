@@ -542,6 +542,10 @@
 /home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
 /home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 /home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/MiniProfiler.AspNetCore.dll
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/MiniProfiler.AspNetCore.Mvc.dll
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/MiniProfiler.EntityFrameworkCore.dll
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/MiniProfiler.Shared.dll
 /home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
 /home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Npgsql.dll
 /home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Npgsql.EntityFrameworkCore.PostgreSQL.dll
@@ -628,6 +632,7 @@
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.AssemblyInfoInputs.cache
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.AssemblyInfo.cs
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.csproj.CoreCompileInputs.cache
+/home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.MvcApplicationPartsAssemblyInfo.cs
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.MvcApplicationPartsAssemblyInfo.cache
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.RazorAssemblyInfo.cache
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.RazorAssemblyInfo.cs
@@ -650,3 +655,7 @@
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.dll
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.pdb
 /home/serdna/work/development/IdeaApp/WebApi/obj/Debug/netcoreapp3.1/IdeaApp.genruntimeconfig.cache
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Microsoft.OpenApi.dll
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.Swagger.dll
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/serdna/work/development/IdeaApp/WebApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerUI.dll

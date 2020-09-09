@@ -39,7 +39,7 @@ namespace IdeaApp.Controllers
             _configuration = configuration;
             _logger = logger;
 
-            _userRepo = new UserRepository(new IdeaDbContext());
+            _userRepo = new UserRepository(new IdeaDbContext(),logger);
         }
 
        
